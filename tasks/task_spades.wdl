@@ -24,11 +24,11 @@ task spades_pe {
     File meta_spades = "${sample}/scaffolds.fasta"
   }
 
-#  runtime {
-#    docker: "staphb/"
-#    memory: "8 GB"
-#    cpu: 2
-#    disks: "local-disk 100 SSD"
-#    preemptible: 0
-#  }
+  runtime {
+    docker: "staphb/spades:3.15.5"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
 }

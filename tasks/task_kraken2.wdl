@@ -26,11 +26,11 @@ task kraken2_a {
     File k2_output = "${sample}-k2-output.txt"
   }
 
-#  runtime {
-#    docker: "staphb/"
-#    memory: "8 GB"
-#    cpu: 2
-#    disks: "local-disk 100 SSD"
-#    preemptible: 0
-#  }
+ runtime {
+   docker: "staphb/kraken2:2.1.2-no-db"
+   memory: "16 GB"
+   cpu: 4
+   disks: "local-disk 100 SSD"
+   preemptible: 0
+ }
 }

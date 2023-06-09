@@ -24,13 +24,13 @@ task scrubber {
     File seqs = "scrubbed-seqs.txt"
   }
 
-#  runtime {
-#    docker: "staphb/"
-#    memory: "8 GB"
-#    cpu: 2
-#    disks: "local-disk 100 SSD"
-#    preemptible: 0
-#  }
+  runtime {
+    docker: "ncbi/sra-human-scrubber:2.1.0"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
 }
 
 task match_read2 {
@@ -52,11 +52,11 @@ task match_read2 {
     File scrub2 = "${sample}-scrubbed_R2.fastq"
   }
 
-#  runtime {
-#    docker: "staphb/"
-#    memory: "8 GB"
-#    cpu: 2
-#    disks: "local-disk 100 SSD"
-#    preemptible: 0
-#  }
+  runtime {
+    docker: "staphb/seqtk:1.3"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
 }

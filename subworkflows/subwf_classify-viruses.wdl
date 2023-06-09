@@ -2,8 +2,8 @@ version 1.0
 
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_kraken2.wdl" as kraken2
+import "../tasks/task_prepare-references.wdl" as prepare_refs
 import "../tasks/task_summarize-taxa.wdl" as summarize_taxa
-import "../tasks/task_select-refs.wdl" as select_refs
 
 
 workflow classify_viruses {
@@ -29,30 +29,29 @@ workflow classify_viruses {
       k2_db=k2_db
   }
 
+  call summarize_taxa.prepare_refs as prepare_refs {
+    input:
+      ref_dir=ref_dir
+  }
+
+  call summarize_taxa.map_meta_ref as map_meta_ref {
+    input:
+      assembly=spades_pe.meta_spades,
+      refs=prepare_refs.refs,
+      sample=sample
+  }
+
   call summarize_taxa.summarize_taxa as summarize_taxa {
     input:
       k2_output=kraken2_a.k2_output,
-      sample=sample
-  }
-
-  call select_refs.select_refs as select_refs {
-    input:
-      assembly=spades_pe.meta_spades,
-      ref_dir=ref_dir,
-      sample=sample
+      sample=sample,
+      ref_aln=map_meta_ref.ref_aln
   }
 
   output {
-    # spades
-    File meta_spades = spades_pe.meta_spades
-    # kraken2
-    File k2_report=kraken2_a.k2_report
-    File k2_output=kraken2_a.k2_output
     # summarize_taxa
-    File taxa_summary=summarize_taxa.taxa_summary
-    # select refs
-    File ref_summary = select_refs.ref_summary
-    Array[Array[String]] ref_list = read_tsv(select_refs.ref_list)
-
+    File taxa_summary = summarize_taxa.taxa_summary
+    File ref_summary = summarize_taxa.ref_summary
+    Array[Array[String]] ref_list = read_tsv(summarize_taxa.ref_list)
   }
 }

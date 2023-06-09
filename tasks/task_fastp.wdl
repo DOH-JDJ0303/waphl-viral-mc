@@ -21,6 +21,7 @@ task fastp_pe {
       --json ${sample}.json \
       --html ${sample}.html
   }
+
   output {
     File trim1 = "${sample}-trimmed_R1.fastq"
     File trim2 = "${sample}-trimmed_R2.fastq"
@@ -28,11 +29,11 @@ task fastp_pe {
     File fastp_html = "${sample}.html"
   }
 
-#  runtime {
-#    docker: "staphb/"
-#    memory: "8 GB"
-#    cpu: 2
-#    disks: "local-disk 100 SSD"
-#    preemptible: 0
-#  }
+ runtime {
+   docker: "staphb/fastp:0.23.4"
+   memory: "8 GB"
+   cpu: 2
+   disks: "local-disk 100 SSD"
+   preemptible: 0
+ }
 }

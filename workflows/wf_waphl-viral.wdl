@@ -55,19 +55,9 @@ workflow waphl_viral {
   }
 
   output {
-    # fastp
-    File trim1 = fastp_pe.trim1
-    File trim2 = fastp_pe.trim2
-    File fastp_json = fastp_pe.fastp_json
-    File fastp_html = fastp_pe.fastp_html
     # scrubber
     File scrub1 = scrubber.scrub1
     File scrub2 = match_read2.scrub2
-    # spades
-    File meta_spades = classify_viruses.meta_spades
-    # kraken2
-    File k2_report=classify_viruses.k2_report
-    File k2_output=classify_viruses.k2_output
     # classify viruses
     File taxa_summary=classify_viruses.taxa_summary
     # create_consensus

@@ -24,11 +24,11 @@ task create_consensus_ivar {
     File consensus_qual = "${sample}-${reference}.qual.txt"
   }
 
-#  runtime {
-#    docker: "staphb/"
-#    memory: "8 GB"
-#    cpu: 2
-#    disks: "local-disk 100 SSD"
-#    preemptible: 0
-#  }
+  runtime {
+    docker: "quay.io/staphb/ivar:1.3.1-titan"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
 }
