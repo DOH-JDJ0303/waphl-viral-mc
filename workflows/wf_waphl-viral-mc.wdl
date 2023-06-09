@@ -1,4 +1,4 @@
-version 1.0  
+version 1.0
 
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_sra-human-scrubber.wdl" as scrubber
