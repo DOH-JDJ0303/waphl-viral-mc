@@ -5,7 +5,7 @@ import "../tasks/task_sra-human-scrubber.wdl" as scrubber
 import "../subworkflows/subwf_classify-viruses.wdl" as classify
 import "../subworkflows/subwf_create-consensus.wdl" as consensus
 
-workflow waphl_viral {
+workflow waphl_viral_mc {
   input {
     File raw1
     File raw2
