@@ -9,7 +9,7 @@ task map_reads_pe {
     String sample
   }
 
-  command {
+  command <<<
     # date and version
     date | tee DATE
     bwa 2>&1 | grep Version: | sed 's/Version: /BWA /g' > VERSION
@@ -18,13 +18,17 @@ task map_reads_pe {
     # setup for pipe
     set -euxo pipefail
 
+    # decompress references
+    mkdir refs
+    tar xfz ~{ref_dir} -C refs
+
     # index reference
-    bwa index '${ref_dir}/${reference}'
+    bwa index refs/~{reference}
 
     # run bwa mem, select only mapped read, convert to .bam, and sort
-    bwa mem -t 3 '${ref_dir}/${reference}' ${read1} ${read2} | samtools view -b -F 4 - | samtools sort - > ${sample}-${reference}.bam
+    bwa mem -t 3 refs/~{reference} ~{read1} ~{read2} | samtools view -b -F 4 - | samtools sort - > ~{sample}-~{reference}.bam
 
-  }
+  >>>
   output {
     File mapped_reads = "${sample}-${reference}.bam"
   }
