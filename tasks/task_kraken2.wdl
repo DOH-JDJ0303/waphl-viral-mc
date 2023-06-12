@@ -12,9 +12,13 @@ task kraken2_a {
     date | tee DATE
     kraken2 -v | head -n 1 | tee VERSION
 
+    # decompress kraken2 database
+    mkdir k2_db
+    tar xfz ${k2_db} -C k2_db
+
     # run kraken2
     kraken2 \
-      --db ${k2_db} \
+      --db k2_db/*/ \
       --threads 10 \
       --report ${sample}-k2-report.txt \
       --output ${sample}-k2-output.txt \
