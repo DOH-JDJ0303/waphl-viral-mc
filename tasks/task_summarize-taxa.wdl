@@ -10,10 +10,10 @@ task prepare_refs {
     mkdir refs
     tar xfz ~{ref_dir} -C refs
     # rename fasta headers and combine into multi-fasta file
-    refs=$(ls refs/*/*)
+    refs=$(ls refs/)
     for ref in ${refs}
     do
-        seqtk seq -C refs/*/${ref} > tmp.fa
+        seqtk seq -C refs/${ref} > tmp.fa
         seqtk rename tmp.fa ${ref} >> refs.fa
     done
     rm tmp.fa

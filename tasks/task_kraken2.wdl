@@ -18,7 +18,7 @@ task kraken2_a {
 
     # run kraken2
     kraken2 \
-      --db k2_db/*/ \
+      --db k2_db/ \
       --threads 10 \
       --report ${sample}-k2-report.txt \
       --output ${sample}-k2-output.txt \
